@@ -26,6 +26,8 @@ RECORRER LISTA:                        void iterate();
 
 MOSTRAR LISTA(similar a iterate()):    void display();
 
+VACIAR LISTA COMPLETA                  void clear();
+
 MOSTRAR POSICIONES(CUENTA CON          void showPositions();
 countNodes  para ensennar en que 
 posicion esta cada nodo)
