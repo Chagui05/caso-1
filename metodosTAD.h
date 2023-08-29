@@ -20,11 +20,11 @@ BORRAR LUEGO DEL CURSOR                void remove();
 
 CONTAR NODOS:                          int countNodes();
 
+MOSTRAR LISTA(similar a iterate()):    void display();
+
 BUSCAR UN NODO:                        node searchNode():
 
 RECORRER LISTA:                        void iterate();
-
-MOSTRAR LISTA(similar a iterate()):    void display();
 
 VACIAR LISTA COMPLETA                  void clear();
 
