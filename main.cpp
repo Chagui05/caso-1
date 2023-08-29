@@ -90,7 +90,7 @@ public:
     string searchNode(string nodo){
     cursor;
     while(cursor->elem != nodo){            // solucionar que no se encicle si no encuentra valor
-        advance();
+        advance();   // no usar advance porque cambia de lugar el cursor y desordenaría la lista 
     }
     cout << back() << endl;
     return back(); 
