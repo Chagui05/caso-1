@@ -86,6 +86,17 @@ public:
             }  
         }
     }
+
+    string searchNode(string nodo){
+    cursor;
+    while(cursor->elem != nodo){            // solucionar que no se encicle si no encuentra valor
+        advance();
+    }
+    cout << back() << endl;
+    return back(); 
+    }
+    
+
 };
 
 int main ()
@@ -98,5 +109,6 @@ int main ()
     lista.add("d");
     lista.countNodes();
     lista.display();
-
+    cout << "search" << endl;
+    lista.searchNode("c");
     }

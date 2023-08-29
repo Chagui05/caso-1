@@ -22,7 +22,7 @@ CONTAR NODOS:                          int countNodes();
 
 MOSTRAR LISTA(similar a iterate()):    void display();
 
-BUSCAR UN NODO:                        node searchNode():
+BUSCAR UN NODO:                        node searchNode(string nodo):
 
 RECORRER LISTA:                        void iterate();
 
