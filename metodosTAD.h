@@ -24,9 +24,9 @@ MOSTRAR LISTA(similar a iterate()):    void display();
 
 BUSCAR UN NODO:                        node searchNode(string nodo):
 
-RECORRER LISTA:                        void iterate();
+RECORRER LISTA:                        void iterate(); no hace falta como metodo 
 
-VACIAR LISTA COMPLETA                  void clear();
+VACIAR LISTA COMPLETA                  void clear(); lo mismo que destructor
 
 MOSTRAR POSICIONES(CUENTA CON          void showPositions();
 countNodes  para ensennar en que 
