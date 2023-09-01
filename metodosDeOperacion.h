@@ -2,7 +2,7 @@
 METODOS EN LAS NOTICIAS:
 
 
-PASAR NOTICIA AL FRENTE (ANNADIR LUEGO DEL CURSOR)                                             titular toFront(titular noticia);
+PASAR NOTICIA AL FRENTE (ANNADIR LUEGO DEL CURSOR)                                             titular toFront(titular noticia); asi sirve add
 
 BORRAR NOTICIA (REMOVE())                                                                      titular delete(titular noticia);
 
