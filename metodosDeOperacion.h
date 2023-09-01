@@ -2,21 +2,19 @@
 METODOS EN LAS NOTICIAS:
 
 
-PASAR NOTICIA AL FRENTE (ANNADIR LUEGO DEL CURSOR)                                             titular toFront(titular noticia); asi sirve add
+PASAR NOTICIA AL FRENTE (ANNADIR LUEGO DEL CURSOR)                                             News toFront(titular noticia); asi sirve add
 
-BORRAR NOTICIA (REMOVE())                                                                      titular delete(titular noticia);
+BORRAR NOTICIA (REMOVE())                                                                      News delete(titular noticia);
 
-BUSCAR PALABRAS (ITERATE() Y BUSCAR AHI)                                                       titular searchWord(string word);
+BUSCAR PALABRAS (ITERATE() Y BUSCAR AHI)                                                       News searchWord(string word);
 
-ENSENNAR POR RELEVANCIA (ORDENANDO POR FECHA, CON SEARCHWORD() TOFRONT() ENTRE OTROS)          titular displayRelevance();
+ENSENNAR POR RELEVANCIA (ORDENANDO POR FECHA, CON SEARCHWORD() TOFRONT() ENTRE OTROS)          News displayRelevance();
 
-CREAR LISTA PARA INPUT (ARRAY SIMPLE, string input[n] = {"1","2","3","4",...,"n"})             titular inputRelevance(array input);
+RELEVANCIA POR INPUT( SIMILAR A SEARCHWORD() PERO SOLO LAS PALABRAS DEL INPUT)                 News searchInput(array input);
 
-RELEVANCIA POR INPUT( SIMILAR A SEARCHWORD() PERO SOLO LAS PALABRAS DEL INPUT)                 titular searchInput(array input);
+ELIMINAR POR INPUT( SIMILAR A SEARCHINPUT() PERO LO QUE HACE ES BORRAR NOTICIAS)               News deleteInput(array input);
 
-ELIMINAR POR INPUT( SIMILAR A SEARCHINPUT() PERO LO QUE HACE ES BORRAR NOTICIAS)               titular deleteInput(array input);
-
-REUBICAR NOTICIA(USANDO COUNTNODES() Y SHOWPOSITIONS() ENCUENTRA LAS POSICIONES                titular reubicate(int n, string+-m);
+REUBICAR NOTICIA(USANDO COUNTNODES() Y SHOWPOSITIONS() ENCUENTRA LAS POSICIONES                void reubicate(int n, string+-m);
 PARA LUEGO HACIENDO ADVANCE PODER ANNADIR LA NOTICIA EN SU NUEVA POSICION )
 
 
