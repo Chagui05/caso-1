@@ -2,9 +2,9 @@
 #define _MAIN_ 1
 #include <iostream>
 #include <string>
-#include "News.h"
-#include "Node.h"
-#include "CircularLinkedList.h"
+#include "News.cpp"
+#include "Node.cpp"
+#include "CircularLinkedList.cpp"
 using namespace std;
 
 int main(){
