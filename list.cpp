@@ -4,11 +4,6 @@
 #include <string>
 #include "node.cpp"
 #include "news.cpp"
-/*
-por ahora estoy usando Integers para almacernar los datos del nodo en la mayoria de casos
-luego se usara por completo la clase News
-*/
-
 using namespace std;
 
 class CircularLinkedList {
@@ -16,23 +11,26 @@ private:
     Node* cursor;
     int size = 0;
 public:
+    Node* getCursor(){
+        return cursor;
+    }
     CircularLinkedList() : cursor(nullptr) {};
     //
-    
+    ~CircularLinkedList(){ while (!empty()) remove(); }
     //
     bool empty() {
         return cursor == nullptr;
     }
     //
-    const int back() const{       
+    News back() const{       
         return cursor->elem; 
     }
     //
-    const int front() const{       
+    News front() const{       
         return cursor->next->elem; 
     }
     //
-    void add(int pElem){
+    void add(News pElem){
         Node* aux = new Node(pElem);
         if(cursor == nullptr){
             aux->next= aux;
@@ -46,28 +44,51 @@ public:
         }
     }
     //
-    void addToFront_aux(Node* pNode){ 
-        pNode->next = cursor->next;
-        cursor->next = pNode;
-        size++;   
+    void addToFront(News pElem){
+        if(cursor == nullptr){
+            add(pElem);
+        }
+        else{
+            News aux = cursor->elem;
+            cursor->elem = pElem;
+            add(aux);
+            size++;
+        }
     }
     //
-    void addToFront(Node* pNode){
-        Node* first = cursor;
-        for(int i = 0; pNode != cursor->next; i++){
-            advance();
+    void addToBack(News pElem){
+        addToFront(pElem);
+        cursor = cursor->next;
         }
-        remove();
-        cursor = first;
-        addToFront_aux(pNode);
+    
+    //
+    void addToIndex(News pElem, int index){
+        if(index == 1){
+            addToFront(pElem);
+        }
+        else if(size = index){
+            addToBack(pElem);
+        }
+        else{
+        Node* aux = cursor;
+        for(int i = 2 ; i != index; i++){
+            aux = aux->next;
+        }
+        Node* indexed = new Node(pElem);
+        indexed->next = aux->next;
+        aux->next = indexed;
+        size++;
+        }
+          
     }
+    //
     void advance(){
         cursor = cursor->next;
     }
     //
     void remove(){
         Node* old = cursor->next;
-        if(old == nullptr){
+        if(cursor == nullptr){
             cout << "**Empty list**" << endl;
             return;}
         if (old == cursor){
@@ -80,26 +101,27 @@ public:
         delete old;   
     }
     //
-    void deleteNode(Node* pNode){
-        Node* toDelete = cursor->next;
-        Node* first = cursor;
-        int counter = 0;
+    News removeIndex(int index){
+        News old;
         if(cursor == nullptr){
             cout << "**Empty list**" << endl;
-        }
-        else if (size == 0){
-        cursor = nullptr;
+            return;}
+        else if (index == 1){
+            old = cursor->elem;
+            cursor = cursor->next;
         }
         else{
-            while(toDelete != pNode && counter<=size) {
-                advance();
-                toDelete = cursor->next;
-                counter++;
+            Node* aux = cursor;
+            for(int i = 2 ; i != index; i++){
+                aux = aux->next;
             }
-            if (counter<=size){remove(); size--;}   
+            Node* toDelete = aux->next;
+            News old = toDelete->elem; 
+            aux->next = toDelete->next;
+            size--;
+            delete toDelete;   
         }
-        cursor = first;
-        delete toDelete, first;  
+        return old;
     }
     //
     int countNodes(){
@@ -123,12 +145,27 @@ public:
             return;
         }
         else{
-            cout << aux->elem << endl;
+            cout << aux->elem.getTitle() << endl;
             aux = aux->next;
             while(aux != cursor){
-                cout << aux->elem << endl;
+                cout << aux->elem.getTitle() << endl;
                 aux = aux->next;
             }  
+        }
+    }
+    //
+    void displayTop5() {
+        Node* aux = cursor;
+        if(aux == nullptr){
+            cout << "**Empty list**" << endl;
+            return;
+        }
+        else{
+            for(int i = 0 ; i < 5 ; i++){
+                cout << aux->elem.getTitle() << endl;
+                aux = aux->next;
+                if(aux == cursor){break;}
+            }
         }
     }
     //
@@ -140,7 +177,7 @@ public:
         else{ 
             for(int i=1 ; i <= size ; i++){
                 if( aux == pNode){
-                    cout << aux->elem << endl;
+                    cout << aux->elem.getTitle() << endl;
                     return aux;
                 }
                 aux = aux->next;
@@ -149,7 +186,7 @@ public:
     }
     }
     //
-    int searchNodeValue(int pElem){
+    News searchNodeValue(News pElem){
         Node* aux = cursor;
         if(aux == nullptr){
                 cout << "**Empty list**" << endl;
@@ -157,7 +194,7 @@ public:
         else{ 
             for(int i=1 ; i <= size ; i++){
                 if( aux->elem == pElem){
-                    cout << aux->elem << endl;
+                    cout << aux->elem.getTitle() << endl;
                     return aux->elem;
                 }
                 aux = aux->next;
@@ -166,7 +203,7 @@ public:
     }
     }
     //
-    int nodePosition(int pElem){
+    int nodePosition(News pElem){
         Node* aux = cursor;
         if(aux != nullptr){
             for(int count = 1 ; count <= size ; count++){
@@ -180,12 +217,13 @@ public:
         cout << "Element not found or empty list" << endl;
     }
     //
-    Node* nodeInPosition(int pPosition){
+
+    News find(int pPosition){
         Node* aux = cursor;
         if(aux != nullptr){
-            for(int count = 0; pPosition > count  ; count++){
+            for(int count = 1; pPosition > count  ; count++){
                 if( pPosition == count){
-                    return aux;
+                    return aux->elem;
                 }
                 aux = aux->next;
             }
@@ -197,30 +235,14 @@ public:
         Node* aux = cursor;
         if(aux != nullptr){
             for(int count = 1 ; count <= size ; count++){
-                cout << "Element: "  << aux->elem << "    position: " << count << endl;
+                cout << "Element: "  << aux->elem.getTitle() << "    position: " << count << endl;
                 aux = aux->next;
             }
         }
         else{cout << "**Empty list**" << endl;}
     }
     //
-    News* searchWord(string pWord){ //retorna el News
-        Node* aux = cursor;
-        if( cursor != nullptr){
-            for(int count = 1 ; count <= size ; count++){
-                string search = aux->getData()->getTitle();
-                size_t pos = search.find(pWord);
-                if(pos != string::npos){                                    
-                    cout << search << " " << pos << endl;                
-                    return aux->getData();
-                }
-                aux = aux->next;
-            }
-        }   
-        else {cout << "Element not found or empty list" << endl;}    
-    }
-    //
-    bool searchWordInNode(string pWord, Node* pNode){                          // hacer una funcion que si este da true lo annada al frente y borre de donde estaba
+    bool searchWordInNode(string pWord, Node* pNode){                          
         Node* aux = cursor;
         int count = 0; 
         if( cursor != nullptr){
@@ -228,7 +250,7 @@ public:
                 aux = aux->next;
             }
             if(count <= size){
-                string search = aux->getData()->getTitle();
+                string search = aux->getData().getTitle();
                 size_t pos = search.find(pWord);
                 if(pos != string::npos){                                    
                     cout << search << " " << pos << endl;                
@@ -241,40 +263,40 @@ public:
         return 0;   
     }
     //
-    void inputRelevance(const string pArray[]) {///// ordena por relevancia
+    void deleteInput(News pArray[]) {///// borra segun los elementos en la lista
         Node* aux = cursor;
         int arraySize = sizeof(pArray) / sizeof(pArray[0]);
         if(cursor != nullptr){
-            for (int i = 0; i <= size; i++) {
+            for (int i = 1; i <= size; i++) {
                 for (int j = 0; j < arraySize; j++){
-                    if(searchWordInNode(pArray[j], aux)){
-                        addToFront(aux);
-                    }
-                }
-                aux = aux->next; 
-            } 
-        }
-        
-    }
-    //
-    void deleteInput(const string pArray[]) {///// borra segun los elementos en la lista
-        Node* aux = cursor;
-        int arraySize = sizeof(pArray) / sizeof(pArray[0]);
-        if(cursor != nullptr){
-            for (int i = 0; i <= size; i++) {
-                for (int j = 0; j < arraySize; j++){
-                    if(searchWordInNode(pArray[j], aux)){
-                        deleteNode(aux);
+                    if(searchWordInNode(pArray[j].getContent(), aux)){
+                        removeIndex(nodePosition(aux->elem));
                     }
                 }
                 aux = aux->next; 
             } 
         } 
     }
+     //
+    void inputRelevance(News pArray[]) {///// ordena por relevancia
+        Node* aux = cursor;
+        int arraySize = sizeof(pArray) / sizeof(pArray[0]);
+        
+        if(cursor != nullptr){
+            for (int i = 0; i <= size; i++) {
+                for (int j = 0; j < arraySize; j++){
+                    if(searchWordInNode(pArray[j].getContent(), aux)){
+                        addToFront(aux->elem);
+                    }
+                }
+                aux = aux->next; 
+            } 
+        }
+    }
     //
     void reubicate(int pPosition, string moveTo ){
         int num;
-        Node* aux = nodeInPosition(pPosition);
+        News aux = find(pPosition);
         string direction = moveTo.substr(0,1);
         try{
             int num = stoi(moveTo.substr(1,2));
@@ -282,39 +304,36 @@ public:
         catch(invalid_argument) {
             cout << "bad input" << endl;
         };
-        if (direction == "+"){
+        
+        if (direction == "-"){
             int where = pPosition-num;
-            if (where < 0){
+            if (where <= 0){
                 where = 1;        
             }
-            placeInPosition(aux, where);
+            placeInPosition(aux, where, pPosition);
         }
         else{
-            int where = pPosition+num;
+            int where = pPosition + num;
             if (where > size){
                 where = size;       
             }
-            placeInPosition(aux, where);
+            placeInPosition(aux, where, pPosition);
         }
-
-
     }
     //
-    void placeInPosition(Node* aux, int pPosition){
-        Node* first = cursor;
-        if(size == 0 == pPosition){
+    void placeInPosition(News pNews, int pNew, int pPrevious){
+        Node* aux = new Node(pNews);
+        News removed;
+        if(size == 0 ){
             cout << "empty list" << endl;
         }
         else if (cursor == nullptr){
             cursor = aux;
         }
         else {
-            for(int i = 1 ; i < pPosition ; i++ ){
-                advance();
-            }
-            addToFront(aux);
+            removed = removeIndex(pPrevious);
+            addToIndex(removed, pNew);
         }
-        cursor = first;
     }
 };
 
@@ -322,13 +341,10 @@ int main() {
     CircularLinkedList lista;
     lista.showPositions();
     lista.countNodes();
-    lista.add(2);
-    lista.add(3);
-    lista.add(5);
-    lista.add(6);
-    lista.nodePosition(6);
     lista.showPositions();
-    cout << lista.back() << endl;
-    cout << lista.front() << endl;
+    cout << lista.back().getTitle() << endl;
+    cout << lista.front().getTitle() << endl;
+    cout<< endl;
+    cout<< endl;
 };
 #endif

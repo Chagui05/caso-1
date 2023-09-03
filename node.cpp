@@ -3,24 +3,23 @@
 #include <iostream>
 #include <string>
 #include "news.cpp"
+#include "list.cpp"
 
 using namespace std;
 
 struct Node {
-    int elem;
     Node* next;
-    News* news;
+    News elem;
 
     Node() : next(nullptr) {};
 
-    Node(int pValue) : elem(pValue), next(nullptr) {};
-
-    Node(News &value) {
-        news = &value;
+    Node(News value) {
+        elem = value;
         next = nullptr;
     };
 
-    News* getData() {return news; };
+    News getData() {return elem; };
+
 };
 
 #endif
