@@ -2,15 +2,12 @@
 #define _NEWS_ 1
 #include <iostream>
 #include <string>
-#include "CircularLinkedList.cpp"
-#include "Node.cpp"
 using namespace std;
 
 class News {
 private: 
     string title;
     string content;
-
 public:
     News() : title(""), content("") {};
 
@@ -28,25 +25,6 @@ public:
 
     string getContent() {
         return content;
-    }
-
-    void byRelevance(CircularLinkedList* list) {
-        list->display();
-    }
-    void relevanceByInput(CircularLinkedList* list, News* pArray[]) {
-        list->inputRelevance(pArray);
-        list->display();
-    }
-    void deleteByInput(CircularLinkedList* list, News* pArray[], int count) {
-        list->deleteInput(pArray, count);
-        list->display();
-    }
-    void reubicateTitular(CircularLinkedList* list, int pPosition, string moveTo ){
-        list->reubicate(pPosition, moveTo);
-        list->display();
-    }
-    void getTop5(CircularLinkedList* list) {
-        list->displayTop5();
     }
 };
 

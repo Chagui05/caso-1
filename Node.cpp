@@ -3,7 +3,6 @@
 #include <iostream>
 #include <string>
 #include "News.cpp"
-
 using namespace std;
 
 struct Node {
