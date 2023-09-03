@@ -2,8 +2,8 @@
 #define _LIST_ 1
 #include <iostream>
 #include <string>
-#include "node.cpp"
-#include "news.cpp"
+#include "News.h"
+#include "Node.h"
 using namespace std;
 
 class CircularLinkedList {
@@ -104,8 +104,7 @@ public:
     News removeIndex(int index){
         News old;
         if(cursor == nullptr){
-            cout << "**Empty list**" << endl;
-            return;}
+            cout << "**Empty list**" << endl;}
         else if (index == 1){
             old = cursor->elem;
             cursor = cursor->next;
@@ -193,7 +192,7 @@ public:
                 }
         else{ 
             for(int i=1 ; i <= size ; i++){
-                if( aux->elem == pElem){
+                if(aux->elem == pElem){
                     cout << aux->elem.getTitle() << endl;
                     return aux->elem;
                 }
@@ -207,7 +206,7 @@ public:
         Node* aux = cursor;
         if(aux != nullptr){
             for(int count = 1 ; count <= size ; count++){
-                if( aux->elem == pElem){
+                if(aux->elem == pElem){
                     cout <<"*" << count << "*" << endl;
                     return count;
                 }
@@ -250,7 +249,7 @@ public:
                 aux = aux->next;
             }
             if(count <= size){
-                string search = aux->getData().getTitle();
+                string search = aux->elem.getTitle();
                 size_t pos = search.find(pWord);
                 if(pos != string::npos){                                    
                     cout << search << " " << pos << endl;                
@@ -263,12 +262,11 @@ public:
         return 0;   
     }
     //
-    void deleteInput(News pArray[]) {///// borra segun los elementos en la lista
+    void deleteInput(News pArray[], int count) {///// borra segun los elementos en la lista
         Node* aux = cursor;
-        int arraySize = sizeof(pArray) / sizeof(pArray[0]);
         if(cursor != nullptr){
             for (int i = 1; i <= size; i++) {
-                for (int j = 0; j < arraySize; j++){
+                for (int j = 0; j < count; j++){
                     if(searchWordInNode(pArray[j].getContent(), aux)){
                         removeIndex(nodePosition(aux->elem));
                     }
@@ -337,14 +335,5 @@ public:
     }
 };
 
-int main() {
-    CircularLinkedList lista;
-    lista.showPositions();
-    lista.countNodes();
-    lista.showPositions();
-    cout << lista.back().getTitle() << endl;
-    cout << lista.front().getTitle() << endl;
-    cout<< endl;
-    cout<< endl;
-};
+
 #endif

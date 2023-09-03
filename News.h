@@ -2,7 +2,8 @@
 #define _NEWS_ 1
 #include <iostream>
 #include <string>
-
+#include "CircularLinkedList.h"
+#include "Node.h"
 using namespace std;
 
 class News {
@@ -11,12 +12,16 @@ private:
     string content;
 
 public:
-    News(){}
+    News() : title(nullptr), content(nullptr) {};
+
     News(string pTitle, string pContent) {
         title = pTitle;
         content = pContent;
     }
-
+    
+    bool operator==(News pNews)const{
+        return pNews.title == title && pNews.content == content;
+    }
     string getTitle() {
         return title;
     }
@@ -32,8 +37,8 @@ public:
         list.inputRelevance(pArray);
         list.display();
     }
-    void deleteByInput(CircularLinkedList list, News pArray[]) {
-        list.deleteInput(pArray);
+    void deleteByInput(CircularLinkedList list, News pArray[], int count) {
+        list.deleteInput(pArray, count);
         list.display();
     }
     void reubicateTitular(CircularLinkedList list, int pPosition, string moveTo ){
