@@ -19,60 +19,51 @@ class NewsManager{
     void relevanceByInput(CircularLinkedList* list, string pArray[], int pCount) {
         string texto;
         int max = list->countNodes();
-        cout << "nodos " << max<< endl << endl;
         for(int currNode = 1; currNode <= max; currNode++){
             News* currNews = list->findNode(currNode);
             string texto = currNews->getTitle();
             for(int count = 0 ; count  < pCount ; count++ ){
-                cout << texto << endl;
-                cout << pArray[count] << endl;
                 if(texto.find(pArray[count]) != string::npos){
                     News* removed = list->removeIndex(currNode);
                     list->addToFront(removed);
-                    cout << "ade" <<endl;
+                    
                 }
-                cout << endl;
             }
         }
-        list->display();
     }
     void deleteByInput(CircularLinkedList* list, string pArray[], int pCount) {
         string texto;
-        for(int currNode = 1; currNode <= list->countNodes(); currNode++){
+        int max = list->countNodes();
+        for(int currNode = 1; currNode <= max; currNode++){
             News* currNews = list->findNode(currNode);
             string texto = currNews->getTitle();
-            for(int count = 1 ; count  <= pCount ; count++ ){
-                string buscar = pArray[count];
-                if(texto.find(buscar)!= string::npos){
-                    News* removed = list->removeIndex(currNode);
+            for(int count = 0 ; count  < pCount ; count++ ){
+                if(texto.find(pArray[count]) != string::npos){
+                    int pos = list->nodePosition(currNews);
+                    News* removed = list->removeIndex(pos);
+                    currNode= 1;
+                    
                 }
             }
         }
-        list->display();
     }
     //
     void reubicateTitular(CircularLinkedList* list, int pPosition, string moveTo ){
-        int num;
         News* aux = list->findNode(pPosition);
         string direction = moveTo.substr(0,1);
-        try{
-            int num = stoi(moveTo.substr(1,2));
-        }
-        catch(invalid_argument) {
-            cout << "bad input" << endl;
-        };
+        int newPos = stoi(moveTo.substr(1,2));
         if (direction == "-"){
-            int where = pPosition-num;
-            if (where <= 0){
-                where = 1;        
+            int where = pPosition+newPos;
+            if (where > list->countNodes()){
+                where = list->countNodes();       
             }
             News* removed = list->removeIndex(pPosition);
             list->addToIndex(removed, where);
         }
         else{
-            int where = pPosition + num;
-            if (where > list->countNodes()){
-                where = list->countNodes();       
+            int where = pPosition - newPos;
+            if (where < 0){
+                where = 1;     
             }
             News* removed = list->removeIndex(pPosition);
             list->addToIndex(removed, where);

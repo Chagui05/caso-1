@@ -135,7 +135,7 @@ public:
             for(int i = 1 ; i != index; i++){
                 aux = aux->next;
             }
-            old = aux->next->elem;
+            old = aux->elem;
             Node* nextNode = aux->next;
             aux->elem = nextNode->elem;
             aux->next = nextNode->next;
@@ -214,13 +214,12 @@ public:
         if(size != 0){
             for(int count = 1 ; count <= size ; count++){
                 if(aux->elem == pElem){
-                    cout <<"*" << count << "*" << endl;
                     return count;
                 }
                 aux = aux->next;
             }
         }
-        cout << "Element not found or empty list" << endl;
+        cout << "Element not found or empty listt" << endl;
     }
     //
 
