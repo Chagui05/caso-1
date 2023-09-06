@@ -14,7 +14,7 @@ struct Node {
     Node(News* pElem) : elem(pElem), next(nullptr) {}
 
     News* getData() {return elem; };
-
+    
 };
 
 #endif
